@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  webdev_apache:
+    build: ./apache
+    volumes:
+    - "${APACHE_DOCROOT}:/var/www/html"
+    ports:
+    - "${APACHE_PORT}:80"
+    links:
+    - webdev_mariadb:mariadb
+    environment:
+    - MYSQL_HOST=mariadb
+    - MYSQL_USER=root
+    - MYSQL_PASS=xxxx
+
+  webdev_mariadb:
+    image: mariadb:10.1
+    volumes:
+    - "${MARIA_DATADIR}:/var/lib/mysql"
+    environment:
+    - MYSQL_ROOT_PASSWORD=xxxx
